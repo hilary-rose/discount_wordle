@@ -5,6 +5,10 @@ library(patchwork)
 #---------------------------------------------------------BY HILARY KILLAM
 #---------------------------------------------------------TO PLAY, IN RSTUDIO CLICK "SOURCE" UP HERE ^
 #---------------------------------------------------------THEN, ENTER YOUR GUESSES IN THE CONSOLE
+#---------------------------------------------------------GUESSED LETTERS IN THE CORRECT PLACE IN THE TARGET WORD WILL APPEAR GREEN
+#---------------------------------------------------------GUESSED LETTERS IN THE INCORRECT PLACE IN THE TARGET WORD WILL APPEAR YELLOW
+#---------------------------------------------------------GUESSED LETTERS NOT IN THE TARGET WORD WILL APPEAR GREY
+#---------------------------------------------------------YOU HAVE 6 TURNS TO CORRECTLY GUESS THE WORD
 #---------------------------------------------------------ENJOY!
 
 wordle <- function() {

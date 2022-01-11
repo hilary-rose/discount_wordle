@@ -71,17 +71,13 @@ wordle <- function() {
   
   #---------------------------------------------------------START
   
-
-  
   print(wrap_plots(p_list, ncol = 1))
   
   #---------------------------------------------------------TURNS
   
   for(turn in 1:6) {
     
-    
     ask_for_guess()
-    
     
     #If guess is correct, all green and print winning message
     

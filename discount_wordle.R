@@ -1,5 +1,5 @@
-library(tidyverse)
-library(patchwork)
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(patchwork))
 
 #---------------------------------------------------------DISCOUNT WORDLE, A KNOCK-OFF VERSION
 #---------------------------------------------------------BY HILARY KILLAM

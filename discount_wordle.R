@@ -210,8 +210,14 @@ wordle <- function() {
 }
 
 print("Welcome to Discount Wordle! If you want to exit the game, press ESC")
-again <- T
-while(again == "Y" | again == "y" | again == "yes" | again == "Yes" | again == T) {
+play <- T
+while(play == T) {
   wordle()
   again <<- readline("Play again? (Y/N) ")
+  if(again == "Y" | again == "y" | again == "yes" | again == "Yes" | again == T) {
+    print("Excellent choice!")
+  } else { 
+    play <- F
+    print("Goodbye!")
+  }
 }

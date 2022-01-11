@@ -1,5 +1,6 @@
 # discount_wordle
 Knock-off version of Wordle
+
 I made this game because I love playing the real Wordle, but I wanted to play more than once per day.
 
 This version is very bare-bones...the list of guessable words has a few odd words in it you'd never guess, and the only guess validation is that your guesses must be 5 characters long. So you could use up a turn guessing "123!@#" and the game would continue.

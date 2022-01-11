@@ -79,8 +79,6 @@ wordle <- function() {
     
     ask_for_guess()
     
-    #If guess is correct, all green and print winning message
-    
     guess_df <- tibble(word = guess, 
                        char1 = str_sub(word, 1, 1),
                        char2 = str_sub(word, 2, 2),

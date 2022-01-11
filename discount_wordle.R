@@ -10,7 +10,7 @@ library(patchwork)
 wordle <- function() {
   
   #---------------------------------------------------------Get target word
-  words <- read_csv("words.csv") %>%
+  words <- read_csv("words.csv", col_types = cols(word = col_character())) %>%
     mutate(char1 = str_sub(word, 1, 1),
            char2 = str_sub(word, 2, 2),
            char3 = str_sub(word, 3, 3),
@@ -67,7 +67,7 @@ wordle <- function() {
   
   #---------------------------------------------------------START
   
-  print("Welcome to Discount Wordle! If you want to exit the game, press ESC")
+
   
   print(wrap_plots(p_list, ncol = 1))
   
@@ -209,4 +209,9 @@ wordle <- function() {
   
 }
 
-wordle()
+print("Welcome to Discount Wordle! If you want to exit the game, press ESC")
+again <- T
+while(again == "Y" | again == "y" | again == "yes" | again == "Yes" | again == T) {
+  wordle()
+  again <<- readline("Play again? (Y/N) ")
+}

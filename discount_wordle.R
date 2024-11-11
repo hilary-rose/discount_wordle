@@ -1,5 +1,6 @@
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(patchwork))
+`%notin%`  <- negate(`%in%`)
 
 #---------------------------------------------------------DISCOUNT WORDLE, A KNOCK-OFF VERSION
 #---------------------------------------------------------BY HILARY KILLAM
@@ -14,7 +15,7 @@ suppressPackageStartupMessages(library(patchwork))
 wordle <- function() {
   
   #---------------------------------------------------------Get target word
-  words <- read_csv("words.csv", col_types = cols(word = col_character())) %>%
+  words <- read_tsv("shuffled_real_wordles.txt", col_types = cols(word = col_character())) %>%
     mutate(char1 = str_sub(word, 1, 1),
            char2 = str_sub(word, 2, 2),
            char3 = str_sub(word, 3, 3),
@@ -24,6 +25,10 @@ wordle <- function() {
   #Randomly choose word
   target <- words %>%
     sample_n(1)
+  
+  target_letters <- str_extract_all(str_to_upper(target$word), boundary("character")) %>%
+    unlist() %>%
+    unique()
   
   #---------------------------------------------------------Initialize alphabet plot
   #alphabet
@@ -67,6 +72,11 @@ wordle <- function() {
       guess <<- readline("Type your guess, then press ENTER > ")
     }
     
+    while (guess %notin% words$word) { 
+      print("Guess must be in word list.")
+      guess <<- readline("Type your guess, then press ENTER > ")
+    }
+    
   }
   
   #---------------------------------------------------------START
@@ -95,11 +105,12 @@ wordle <- function() {
     guess_list <- unique(c(guess_list, guess_long$letter))
     
     alphabet <- alphabet %>%
-      mutate(in_guess = case_when(letter %in% guess_list ~ "guessed",
+      mutate(in_guess = case_when(letter %in% target_letters & letter %in% guess_list ~ "in_target",
+                                  letter %in% guess_list ~ "guessed",
                                   TRUE ~ "not_guessed"))
     
-    p_abc_fills <- c(not_guessed = "grey50", guessed = "grey30")
-    p_abc_colors <- c(not_guessed = "white", guessed = "grey50")
+    p_abc_fills <- c(in_target = "#0074CC", not_guessed = "grey50", guessed = "grey30")
+    p_abc_colors <- c(in_target = "white", not_guessed = "white", guessed = "grey50")
     
     p_abc <- alphabet %>%
       ggplot(aes(x = id, y = position, fill = in_guess)) +
@@ -212,10 +223,18 @@ play <- T
 while(play == T) {
   wordle()
   again <<- readline("Play again? (Y/N) ")
-  if(again == "Y" | again == "y" | again == "yes" | again == "Yes" | again == T) {
+  yes_vector <- c("Y", "y", "yes", "Yes", T)
+  no_vector <- c("N", "n", "no", "No", F)
+  while(again %notin% yes_vector & again %notin% no_vector) {
+    again <<- readline("Play again? (Y/N) ")
+  }
+    if(again %in% yes_vector) {
     print("Excellent choice!")
-  } else { 
-    play <- F
+  } else if(again %in% no_vector) { 
+    play <- F 
     print("Goodbye!")
   }
 }
+
+
+
